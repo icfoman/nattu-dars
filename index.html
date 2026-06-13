@@ -574,45 +574,56 @@ function handleSubmit() {
 
 // Load on page ready
 loadHierarchy();
-</script>
-<script>
+
   // Handshake connection to send form data to your backend
   document.querySelector('.card').insertAdjacentHTML('beforeend', '<button class="btn-submit" id="btnSubmit">Submit Registration</button>');
 
   document.getElementById('btnSubmit').addEventListener('click', function(e) {
     e.preventDefault();
+    
+    const nameInput = document.getElementById('name').value.trim();
+    if (!nameInput) {
+      alert("Please enter your full name.");
+      return;
+    }
+
     this.disabled = true;
     this.innerText = "Submitting...";
 
-    const payload = {
-      name: document.getElementById('name').value,
-      darsiType: document.querySelector('input[name="darsiType"]:checked').value,
-      degree: document.getElementById('degree').value,
-      attend: document.querySelector('input[name="attend"]:checked').value
-    };
+    const name = encodeURIComponent(nameInput);
+    const darsiType = encodeURIComponent(document.querySelector('input[name="darsiType"]:checked').value);
+    const degree = encodeURIComponent(document.getElementById('degree').value.trim());
+    const attend = encodeURIComponent(document.querySelector('input[name="attend"]:checked').value);
 
-    fetch('https://script.google.com/macros/s/AKfycby0kh2QjHYKCrW-5-CHD8EtUnQU3A-vwZJZaa_FdPkYLmFl3XNXUgKxtbS49g-pBLDR/exec', {
-      method: 'POST',
-      body: JSON.stringify(payload)
-    })
-    .then(res => res.json())
-    .then(response => {
-      if(response.result === 'success') {
-        alert('Registration Successful!');
-        location.reload();
-      } else {
-        alert('Submission failed. Please try again.');
-        this.disabled = false;
-        this.innerText = "Submit Registration";
-      }
-    })
-    .catch(err => {
-      alert('Network error. Data successfully sent or blocked by CORS.');
-      this.disabled = false;
-      this.innerText = "Submit Registration";
-    });
+    // Create a clean JSONP request link
+    const webAppUrl = "https://script.google.com/macros/s/AKfycby0kh2QjHYKCrW-5-CHD8EtUnQU3A-vwZJZaa_FdPkYLmFl3XNXUgKxtbS49g-pBLDR/exec";
+    const scriptUrl = `${webAppUrl}?callback=handleResponse&name=${name}&darsiType=${darsiType}&degree=${degree}&attend=${attend}`;
+
+    // Inject script tag dynamically to bypass browser CORS completely
+    const script = document.createElement('script');
+    script.src = scriptUrl;
+    script.id = 'jsonpSubmit';
+    document.body.appendChild(script);
   });
+
+  // Handle the success response back from Google cleanly
+  function handleResponse(response) {
+    const btn = document.getElementById('btnSubmit');
+    if (response.result === 'success') {
+      alert('Registration Successful!');
+      location.reload();
+    } else {
+      alert('Submission failed: ' + response.error);
+      btn.disabled = false;
+      btn.innerText = "Submit Registration";
+    }
+    // Clean up temporary script tag elements
+    const oldScript = document.getElementById('jsonpSubmit');
+    if(oldScript) oldScript.remove();
+  }
 </script>
+
+
 
 </body>
 </html>
