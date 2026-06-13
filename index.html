@@ -334,21 +334,45 @@ body {
 
 var H = null;
 
+// ====== THE FIXED GITHUB PAGES CODE ======
+const WEB_APP_URL = "YOUR_NEW_WEB_APP_URL_HERE"; 
+
 function loadHierarchy() {
+  // Show the loading text status overlay instantly
   document.getElementById('loadingMsg').classList.add('show');
-  google.script.run
-    .withSuccessHandler(function(data) {
-      H = data;
-      document.getElementById('loadingMsg').classList.remove('show');
-      populateNations();
-      document.getElementById('nation').disabled = false;
-    })
-    .withFailureHandler(function(e) {
-      document.getElementById('loadingMsg').textContent =
-        '❌ Could not load hierarchy: ' + e.message;
-    })
-    .getHierarchy();
+  
+  // Routes to your external Web App API endpoints via JSONP callback routing
+  const fetchUrl = `${WEB_APP_URL}?action=getHierarchy&callback=handleHierarchySuccess`;
+  
+  const script = document.createElement('script');
+  script.src = fetchUrl;
+  script.id = 'jsonpHierarchy';
+  
+  // Gracefully catch system network drops or timeouts
+  script.onerror = function() {
+    document.getElementById('loadingMsg').textContent = '❌ Network connection timed out or script blocked.';
+  };
+  
+  document.body.appendChild(script);
 }
+
+// Global handle wrapper that handles the backend data packet delivery
+function handleHierarchySuccess(data) {
+  // Save data packet layout properties back to your original global 'H' variable matrix
+  H = data;
+  
+  // Hide loading notification text
+  document.getElementById('loadingMsg').classList.remove('show');
+  
+  // Fire off your original secondary functions to parse dropdown list boxes
+  populateNations();
+  document.getElementById('nation').disabled = false;
+  
+  // Housekeep and delete the temporary routing tag safely
+  const oldScript = document.getElementById('jsonpHierarchy');
+  if(oldScript) oldScript.remove();
+}
+
 
 // ── Populate Nations ──
 function populateNations() {
