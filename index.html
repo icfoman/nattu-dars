@@ -575,7 +575,40 @@ function handleSubmit() {
 // Load on page ready
 loadHierarchy();
 
-  // Handshake connection to send form data to your backend
+// This is the code added for GitHub
+  // Global configuration values
+  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby0kh2QjHYKCrW-5-CHD8EtUnQU3A-vwZJZaa_FdPkYLmFl3XNXUgKxtbS49g-pBLDR/exec";
+
+  // ==========================================
+  // STEP 1: LOAD HIERARCHY DATA ON STARTUP
+  // ==========================================
+  window.addEventListener('DOMContentLoaded', () => {
+    // Generate a secure connection hook to fetch table metadata records
+    const fetchUrl = `${WEB_APP_URL}?action=getHierarchy&callback=loadDropdowns`;
+    
+    const script = document.createElement('script');
+    script.src = fetchUrl;
+    script.id = 'jsonpHierarchy';
+    document.body.appendChild(script);
+  });
+
+  // Callback handler that parses the tree matrix once received from Google
+  function loadDropdowns(data) {
+    console.log("Hierarchy structure successfully loaded:", data);
+    
+    // Clean up the temporary injection tag
+    const oldScript = document.getElementById('jsonpHierarchy');
+    if(oldScript) oldScript.remove();
+
+    // 💡 YOUR DROPDOWN GENERATION CODE GOES HERE:
+    // You can now access: data.nations, data.config, and data.tree
+    // Example: Populate a nation selection dropdown menu element
+  }
+
+  // ==========================================
+  // STEP 2: HANDLE REGISTRATION FORM SUBMISSION
+  // ==========================================
+  // Create and inject the form submit button dynamically
   document.querySelector('.card').insertAdjacentHTML('beforeend', '<button class="btn-submit" id="btnSubmit">Submit Registration</button>');
 
   document.getElementById('btnSubmit').addEventListener('click', function(e) {
@@ -595,18 +628,16 @@ loadHierarchy();
     const degree = encodeURIComponent(document.getElementById('degree').value.trim());
     const attend = encodeURIComponent(document.querySelector('input[name="attend"]:checked').value);
 
-    // Create a clean JSONP request link
-    const webAppUrl = "https://script.google.com/macros/s/AKfycby0kh2QjHYKCrW-5-CHD8EtUnQU3A-vwZJZaa_FdPkYLmFl3XNXUgKxtbS49g-pBLDR/exec";
-    const scriptUrl = `${webAppUrl}?callback=handleResponse&name=${name}&darsiType=${darsiType}&degree=${degree}&attend=${attend}`;
+    // Create standard secure URL route parameters
+    const submissionUrl = `${WEB_APP_URL}?callback=handleResponse&name=${name}&darsiType=${darsiType}&degree=${degree}&attend=${attend}`;
 
-    // Inject script tag dynamically to bypass browser CORS completely
     const script = document.createElement('script');
-    script.src = scriptUrl;
+    script.src = submissionUrl;
     script.id = 'jsonpSubmit';
     document.body.appendChild(script);
   });
 
-  // Handle the success response back from Google cleanly
+  // Handle data storage response results sent back from your Sheet
   function handleResponse(response) {
     const btn = document.getElementById('btnSubmit');
     if (response.result === 'success') {
@@ -617,13 +648,11 @@ loadHierarchy();
       btn.disabled = false;
       btn.innerText = "Submit Registration";
     }
-    // Clean up temporary script tag elements
+    
     const oldScript = document.getElementById('jsonpSubmit');
     if(oldScript) oldScript.remove();
   }
 </script>
-
-
 
 </body>
 </html>
