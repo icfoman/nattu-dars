@@ -1,682 +1,642 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ml">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 <title>നാട്ടു ദർസ് — Registration</title>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Malayalam:wght@400;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
 <style>
-:root {
-  --green:      #1a6b3c;
-  --green-dark: #0f4a28;
-  --green-mid:  --green-mid;  
-  --green-mid-real: #2a8a52; /* Fixed syntax */
-  --green-lt:   #e8f5ee;
-  --gold:       #d4a017;
-  --ink:        #1c2b20;
-  --muted:      #5a7060;
-  --border:     #d4e6d9;
-  --bg:         #f2f7f4;
-  --white:      #ffffff;
-  --red:        #c0392b;
-  --radius:     12px;
-  --shadow:     0 4px 24px rgba(26,107,60,0.10);
-}
-* { box-sizing:border-box; margin:0; padding:0; }
-body {
-  font-family:'Outfit',sans-serif;
-  background:var(--bg);
-  min-height:100vh;
-  padding-bottom:60px;
-  -webkit-text-size-adjust: 100%; /* Prevents iOS font resizing */
-}
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-.glad-header {
-  width:100%; background:#3d3300;
-  display:flex; justify-content:center;
-  box-shadow:0 3px 16px rgba(0,0,0,0.35);
-}
-.glad-header img { width:100%; max-width:680px; height:auto; display:block; }
+  :root {
+    --green:       #1a6b3c;
+    --green-dark:  #134f2c;
+    --green-light: #e8f5ee;
+    --gold:        #c9a227;
+    --text:        #1a1a1a;
+    --muted:       #6b7280;
+    --border:      #d1d5db;
+    --error:       #dc2626;
+    --radius:      10px;
+    --shadow:      0 4px 24px rgba(0,0,0,0.10);
+  }
 
-.hero {
-  background:linear-gradient(150deg,var(--green-dark) 0%,var(--green) 55%,var(--green-mid-real) 100%);
-  padding:36px 16px 44px; text-align:center; position:relative; overflow:hidden;
-}
-.hero::before {
-  content:''; position:absolute; inset:0;
-  background:radial-gradient(ellipse at 80% 20%,rgba(212,160,23,0.15) 0%,transparent 55%),
-             radial-gradient(ellipse at 15% 85%,rgba(255,255,255,0.06) 0%,transparent 50%);
-}
-.hero-badge {
-  display:inline-flex; align-items:center; gap:6px;
-  background:rgba(212,160,23,0.22); border:1px solid rgba(212,160,23,0.45);
-  color:#f5d87a; font-size:11px; font-weight:700; letter-spacing:1.5px;
-  text-transform:uppercase; padding:5px 14px; border-radius:20px;
-  margin-bottom:14px; position:relative;
-}
-.hero-ml {
-  font-family:'Noto Sans Malayalam','Outfit',sans-serif;
-  font-size:clamp(24px, 5vw, 36px); font-weight:700; color:#fff;
-  line-height:1.3; position:relative; text-shadow:0 2px 16px rgba(0,0,0,0.3);
-  word-break: break-word; /* Prevents overflow of long text */
-}
-.hero-en {
-  font-size:clamp(12px,2.5vw,15px); color:rgba(255,255,255,0.72);
-  font-weight:500; letter-spacing:0.5px; margin-top:6px; position:relative;
-}
-.wave-svg { display:block; margin-top:-1px; width:100%; height:24px; }
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: #f0f4f0;
+    color: var(--text);
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 0 0 60px 0;
+  }
 
-.container { max-width:560px; margin:0 auto; padding:0 12px; }
+  /* ── HEADER ── */
+  .header-wrap {
+    width: 100%; max-width: 640px;
+    background: linear-gradient(135deg, var(--green-dark), var(--green));
+    text-align: center; padding: 28px 20px 20px; color: #fff;
+  }
+  .header-wrap img.header-img {
+    width: 100%; display: block; max-height: 180px; object-fit: contain;
+  }
+  .header-title {
+    font-size: clamp(28px, 6vw, 40px); font-weight: 700;
+    text-shadow: 0 2px 8px rgba(0,0,0,.25); line-height: 1.2;
+  }
+  .header-sub {
+    font-size: 13px; opacity: .82; margin-top: 5px;
+    text-transform: uppercase; letter-spacing: .8px;
+  }
+  .gold-bar {
+    height: 4px; width: 100%; max-width: 640px;
+    background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
 
-.section-title {
-  font-size:10px; font-weight:700; color:var(--green);
-  text-transform:uppercase; letter-spacing:1.8px;
-  margin:26px 0 12px; display:flex; align-items:center; gap:8px;
-}
-.section-title::after { content:''; flex:1; height:1px; background:var(--border); }
+  /* ── CARD ── */
+  .card {
+    background: #fff; width: 100%; max-width: 640px;
+    border-radius: 0 0 var(--radius) var(--radius);
+    box-shadow: var(--shadow); padding: 28px 28px 36px;
+  }
 
-.card {
-  background:var(--white); border-radius:var(--radius);
-  padding:20px 16px; box-shadow:var(--shadow); /* Snugger padding for small screens */
-  border:1px solid var(--border); margin-bottom:0;
-}
+  /* ── SECTION TITLE ── */
+  .section-title {
+    font-size: 16px; font-weight: 700; color: var(--green-dark);
+    margin-bottom: 20px; padding-bottom: 10px;
+    border-bottom: 2px solid var(--green-light);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .section-title::before {
+    content: ''; width: 4px; height: 18px;
+    background: var(--gold); border-radius: 2px; flex-shrink: 0;
+  }
 
-.field { margin-bottom:16px; }
-.field:last-child { margin-bottom:0; }
-.field label {
-  display:flex; align-items:center; gap:5px;
-  font-size:11px; font-weight:700; color:var(--muted);
-  text-transform:uppercase; letter-spacing:0.8px; margin-bottom:6px;
-}
-.req { color:var(--red); font-size:13px; line-height:1; }
-.opt { color:#aab5ae; font-weight:400; font-size:10px; text-transform:none; letter-spacing:0; }
+  /* ── FIELD ── */
+  .field { margin-bottom: 18px; }
+  .field-label {
+    display: block; font-size: 12px; font-weight: 700;
+    color: var(--muted); margin-bottom: 7px;
+    text-transform: uppercase; letter-spacing: .6px;
+  }
+  .field-label .req { color: var(--error); margin-left: 2px; }
 
-/* FIXED: Target only text fields for appearance reset, leaving radios safe */
-.field input[type="text"], .field select {
-  width:100%; padding:12px 14px;
-  border:1.5px solid var(--border); border-radius:9px;
-  font-size:16px; font-family:'Outfit',sans-serif; 
-  color:var(--ink); background:#fbfdfb; outline:none;
-  appearance:none; -webkit-appearance:none;
-  transition:border-color 0.2s,box-shadow 0.2s,background 0.2s;
-}
-.field input[type="text"]:focus, .field select:focus {
-  border-color:var(--green);
-  box-shadow:0 0 0 3px rgba(26,107,60,0.10);
-  background:var(--white);
-}
-.field input::placeholder { color:#b8c9be; }
-.field select {
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%231a6b3c' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat:no-repeat; background-position:right 13px center;
-  background-color:#fbfdfb; padding-right:36px; cursor:pointer;
-}
-.field select:disabled { background-color:#f0f4f1; color:#b8c9be; cursor:not-allowed; }
-.hint { font-size:11px; color:#9aada0; margin-top:4px; }
+  input[type="text"],
+  input[type="tel"],
+  select {
+    width: 100%; padding: 11px 14px;
+    border: 1.5px solid var(--border); border-radius: var(--radius);
+    font-size: 15px; color: var(--text); background: #fafafa;
+    transition: border-color .2s, box-shadow .2s;
+    appearance: none; -webkit-appearance: none;
+  }
+  input[type="text"]:focus,
+  input[type="tel"]:focus,
+  select:focus {
+    outline: none; border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(26,107,60,.12); background: #fff;
+  }
+  input.err, select.err { border-color: var(--error) !important; }
 
-.dyn-field {
-  overflow:hidden;
-  transition:max-height 0.3s ease, opacity 0.25s ease, margin-bottom 0.3s ease;
-}
-.dyn-field.hide { max-height:0; opacity:0; margin-bottom:0; pointer-events:none; }
-.dyn-field.show { max-height:120px; opacity:1; margin-bottom:16px; }
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath fill='%236b7280' d='M6 8 0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+  }
+  select:disabled {
+    opacity: .5; cursor: not-allowed;
+  }
 
-.row-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-@media(max-width:480px){ .row-2 { grid-template-columns:1fr; } } /* Adjusted breakpoint */
+  /* ── TOGGLE BUTTONS (radio as pill buttons) ── */
+  /* Using <label> wrapping <input> — JS adds/removes .active class */
+  .toggle-group {
+    display: flex;
+    border: 1.5px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .toggle-group input[type="radio"] {
+    /* Hidden but still accessible/functional */
+    position: absolute; opacity: 0; width: 0; height: 0; pointer-events: none;
+  }
+  .toggle-option {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    padding: 11px 8px; cursor: pointer;
+    font-size: 14px; font-weight: 600; color: var(--muted);
+    background: #fafafa;
+    border-right: 1px solid var(--border);
+    user-select: none;
+    transition: background .15s, color .15s;
+    /* Prevent inheritance of field-label styles */
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    margin: 0 !important;
+    line-height: 1.4;
+  }
+  .toggle-option:last-child { border-right: none; }
+  .toggle-option.active { background: var(--green); color: #fff; }
 
-.loading-msg {
-  text-align:center; color:var(--muted); font-size:13px;
-  padding:20px 0; display:none;
-}
-.loading-msg.show { display:block; }
+  /* ── DEGREE SUB-FIELD ── */
+  .degree-sub {
+    margin-top: 10px; padding: 14px;
+    background: var(--green-light);
+    border: 1.5px solid #b2dcc4; border-radius: var(--radius);
+  }
+  .degree-sub .field-label { color: var(--green-dark); }
+  .degree-sub input[type="text"] {
+    border-color: #b2dcc4; background: #fff; padding: 9px 12px; font-size: 14px;
+  }
 
-.btn-submit {
-  width:100%; padding:16px; /* Slightly larger for easier thumb-tapping */
-  background:linear-gradient(135deg,var(--green-dark),var(--green));
-  color:#fff; font-size:16px; font-weight:700;
-  font-family:'Outfit',sans-serif; border:none;
-  border-radius:11px; cursor:pointer; letter-spacing:0.3px;
-  margin-top:24px; transition:transform 0.15s,box-shadow 0.15s;
-  box-shadow:0 5px 18px rgba(26,107,60,0.35);
-  -webkit-tap-highlight-color: transparent;
-}
-.btn-submit:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 9px 26px rgba(26,107,60,0.42); }
-.btn-submit:disabled { opacity:.6; cursor:not-allowed; transform:none; }
+  /* ── DIVIDER ── */
+  .divider {
+    font-size: 11px; font-weight: 700; color: var(--green);
+    text-transform: uppercase; letter-spacing: 1.2px;
+    margin: 24px 0 18px; display: flex; align-items: center; gap: 8px;
+  }
+  .divider::after { content: ''; flex: 1; height: 1px; background: var(--green-light); }
 
-.msg {
-  display:none; border-radius:10px; padding:16px 18px;
-  margin-top:16px; font-size:14px; line-height:1.6;
-}
-.msg.success   { background:var(--green-lt); border:1.5px solid #a7dfc9; color:var(--green-dark); }
-.msg.error     { background:#fef2f2; border:1.5px solid #fca5a5; color:#8b1a1a; }
-.msg.duplicate { background:#fffbeb; border:1.5px solid #fcd34d; color:#7c5200; }
-.msg-title { font-weight:700; font-size:15px; margin-bottom:4px; }
+  /* ── FIELD ERROR ── */
+  .field-error {
+    font-size: 12px; color: var(--error); margin-top: 4px; display: none;
+  }
+  .field-error.show { display: block; }
 
-.footer {
-  text-align:center; margin-top:28px;
-  color:#8aaa92; font-size:11px; letter-spacing:0.3px;
-}
+  /* ── SUBMIT BUTTON ── */
+  .btn-submit {
+    width: 100%; padding: 14px;
+    background: linear-gradient(135deg, var(--green-dark), var(--green));
+    color: #fff; border: none; border-radius: var(--radius);
+    font-size: 16px; font-weight: 700; cursor: pointer; margin-top: 24px;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    transition: opacity .2s, transform .1s;
+  }
+  .btn-submit:hover  { opacity: .92; transform: translateY(-1px); }
+  .btn-submit:active { transform: translateY(0); }
+  .btn-submit:disabled { opacity: .55; cursor: not-allowed; transform: none; }
+
+  /* ── ALERTS ── */
+  .alert {
+    padding: 12px 16px; border-radius: var(--radius);
+    font-size: 14px; font-weight: 500; margin-top: 14px;
+    display: none; align-items: flex-start; gap: 10px;
+  }
+  .alert.show { display: flex; }
+  .alert-error { background: #fee2e2; color: var(--error); border: 1px solid #fca5a5; }
+  .alert-icon  { font-size: 18px; flex-shrink: 0; }
+
+  /* ── SPINNER ── */
+  .spinner {
+    width: 20px; height: 20px;
+    border: 2.5px solid rgba(255,255,255,.4); border-top-color: #fff;
+    border-radius: 50%; animation: spin .7s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── SUCCESS SCREEN ── */
+  .success-screen { text-align: center; padding: 52px 24px; }
+  .success-icon   { font-size: 68px; margin-bottom: 16px; display: block; }
+  .success-screen h2 { font-size: 22px; color: var(--green-dark); margin-bottom: 8px; }
+  .success-screen p  { color: var(--muted); font-size: 15px; line-height: 1.6; }
+
+  /* ── LOADING OVERLAY ── */
+  #loadingOverlay {
+    position: fixed; inset: 0; background: rgba(255,255,255,.9);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; z-index: 999;
+    transition: opacity .3s;
+  }
+  #loadingOverlay .spin-big {
+    width: 52px; height: 52px;
+    border: 4px solid #d1d5db; border-top-color: var(--green);
+    border-radius: 50%; animation: spin .8s linear infinite; margin-bottom: 16px;
+  }
+  #loadingOverlay p { color: var(--muted); font-size: 15px; }
+  #loadingOverlay.error-state p { color: var(--error); font-size: 14px; max-width: 300px; text-align: center; line-height: 1.6; }
+
+  .hidden { display: none !important; }
+
+  @media (max-width: 480px) {
+    .card { padding: 20px 16px 28px; }
+    .toggle-option { font-size: 13px; padding: 10px 4px; }
+  }
 </style>
 </head>
 <body>
 
-<!-- Dynamic body elements like your .nattu-dars-header, .hero, and .container go here -->
-
-</body>
-</html>
-
-<body>
-
-<div class="nattu-dars-header">
-
+<!-- ── LOADING OVERLAY ── -->
+<div id="loadingOverlay">
+  <div class="spin-big"></div>
+  <p>Loading form…</p>
 </div>
 
-<div class="hero">
-  <div class="hero-badge">🏅 Tazkiya </div>
-  <div class="hero-badge">🏅 ICF International</div>
-  <div class="hero-ml">നാട്ടു ദർസ്</div>
-  <div class="hero-en">Nattu Dars — Registration</div>
+<!-- ── HEADER ── -->
+<div class="header-wrap" id="headerWrap">
+  <!-- If Apps Script returns a base64 image it will be injected here,
+       otherwise the text title below is shown -->
+  <div class="header-title">നാട്ടു ദർസ്</div>
+  <div class="header-sub">Teacher Registration</div>
 </div>
-  <svg class="wave-svg" viewBox="0 0 1440 36" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
-    <path d="M0,18 C480,36 960,0 1440,18 L1440,36 L0,36 Z" fill="#f2f7f4"/>
-  </svg>
+<div class="gold-bar"></div>
 
-    <div class="container">
+<!-- ── CARD ── -->
+<div class="card">
 
-      <div class="section-title">Personal Information</div>
-      <div class="card">
-        <div class="field">
-          <label>Full Name <span class="req">*</span></label>
-          <input type="text" id="name" placeholder="Enter your full name"/>
-        </div>
-    <!-- Darsi / Degree Toggle -->
-    <div class="field">
-      <label>Qualification Type <span class="req">*</span></label>
-      <div class="radio-group">
-        <input type="radio" name="darsiType" id="optDarsi" value="Darsi" checked>
-        <label for="optDarsi">ദർസ് (Darsi)</label>
-        <input type="radio" name="darsiType" id="optDegree" value="Degree">
-        <label for="optDegree">ബിരുദം (Degree)</label>
-      </div>
-    </div>
-
-    <!-- Degree text (shown only when Degree selected) -->
-    <div class="field hidden" id="degreeField">
-      <label>Degree Details <span class="req">*</span></label>
-      <input type="text" id="degree" placeholder="e.g. B.A Islamic Studies, M.A Arabic...">
-      <div class="field-error" id="degreeErr">Please enter your degree details.</div>
-    </div>
-
-    <!-- Attendance Toggle -->
-    <div class="field">
-      <label>ഇജാസത് മീറ്റ്<span class="req">*</span></label>
-      <div class="radio-group">
-        <!-- FIXED: Unique ID -->
-        <input type="radio" name="attend" id="optPhysical" value="Physical" checked>
-        <!-- FIXED: Links to optPhysical -->
-        <label for="optPhysical">ഫിസിക്കൽ ആയി (Physical)</label>
-        
-        <!-- FIXED: Unique ID -->
-        <input type="radio" name="attend" id="optOnline" value="Online">
-        <!-- FIXED: Links to optOnline -->
-        <label for="optOnline">ഓൺലൈൻ വഴി (Online)</label>
-      </div>
-    </div>
-
- 
-    <div class="row-2">
-      <div class="field">
-        <label>WhatsApp No <span class="req">*</span></label>
-        <input type="tel" id="whatsapp" placeholder="+96899999999"
-               oninput="this.value=this.value.replace(/\s/g,'')"/>
-        <div class="hint">No spaces, with country code</div>
-      </div>
-      <div class="field">
-        <label>Mobile No <span class="req">*</span></label>
-        <input type="tel" id="mobile" placeholder="+96899999999"
-               oninput="this.value=this.value.replace(/\s/g,'')"/>
-        <div class="hint">No spaces, with country code</div>
-      </div>
-    </div>
+  <!-- SUCCESS SCREEN (hidden initially) -->
+  <div class="success-screen hidden" id="successScreen">
+    <span class="success-icon">✅</span>
+    <h2>Registration Successful!</h2>
+    <p>Thank you. You will be contacted soon.<br>
+       <small style="color:#9ca3af">നാട്ടു ദർസ്</small></p>
   </div>
 
-  <div class="section-title">Organizational Details</div>
-  <div class="card">
+  <!-- ── REGISTRATION FORM ── -->
+  <div id="formWrap">
+    <div class="section-title">Personal Information</div>
 
-    <div class="loading-msg" id="loadingMsg">⏳ Loading hierarchy…</div>
-
-    <!-- Nation — always shown -->
+    <!-- Name -->
     <div class="field">
-      <label>Nation <span class="req">*</span></label>
-      <select id="nation" onchange="onNationChange()" disabled>
-        <option value="">— Loading… —</option>
+      <span class="field-label">Full Name <span class="req">*</span></span>
+      <input type="text" id="name" placeholder="Enter your full name" autocomplete="name">
+      <div class="field-error" id="nameErr">Please enter your full name.</div>
+    </div>
+
+    <!-- Qualification Type -->
+    <div class="field">
+      <span class="field-label">Qualification Type <span class="req">*</span></span>
+      <div class="toggle-group" id="qualGroup">
+        <label class="toggle-option active">
+          <input type="radio" name="qualType" value="Darsi" checked>
+          ദർസ് (Darsi)
+        </label>
+        <label class="toggle-option">
+          <input type="radio" name="qualType" value="Degree">
+          ഡിഗ്രി (Degree)
+        </label>
+      </div>
+      <!-- Shown only when Degree is chosen -->
+      <div class="degree-sub hidden" id="degreeSubField">
+        <span class="field-label">What degree do you hold? <span class="req">*</span></span>
+        <input type="text" id="degree" placeholder="e.g. B.A Islamic Studies, M.A Arabic, B.Ed…">
+        <div class="field-error" id="degreeErr">Please enter the degree you hold.</div>
+      </div>
+    </div>
+
+    <!-- Ijazat Meet Attendance -->
+    <div class="field">
+      <span class="field-label">Ijazat Meet Attendance <span class="req">*</span></span>
+      <div class="toggle-group" id="attendGroup">
+        <label class="toggle-option active">
+          <input type="radio" name="attendance" value="Physical" checked>
+          🏛️&nbsp;Physical
+        </label>
+        <label class="toggle-option">
+          <input type="radio" name="attendance" value="Online">
+          💻&nbsp;Online
+        </label>
+      </div>
+      <div class="field-error" id="attendErr">Please select your attendance mode.</div>
+    </div>
+
+    <!-- Mobile -->
+    <div class="field">
+      <span class="field-label">Mobile Number <span class="req">*</span></span>
+      <input type="tel" id="mobile" placeholder="+968 XXXX XXXX" autocomplete="tel">
+      <div class="field-error" id="mobileErr">Please enter a valid mobile number.</div>
+    </div>
+
+    <!-- WhatsApp -->
+    <div class="field">
+      <span class="field-label">WhatsApp Number <span class="req">*</span></span>
+      <input type="tel" id="whatsapp" placeholder="+968 XXXX XXXX">
+      <div class="field-error" id="whatsappErr">Please enter a valid WhatsApp number.</div>
+    </div>
+
+    <div class="divider">Location</div>
+
+    <!-- Nation -->
+    <div class="field">
+      <span class="field-label">Nation <span class="req">*</span></span>
+      <select id="nation">
+        <option value="">— Select Nation —</option>
       </select>
+      <div class="field-error" id="nationErr">Please select your nation.</div>
     </div>
 
-    <!-- Chapter — Saudi Arabia only -->
-    <div class="dyn-field hide" id="wrapChapter">
-      <label class="field" style="margin-bottom:0">
-        <span style="font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;">
-          Chapter <span class="req">*</span>
-        </span>
-      </label>
-      <div class="field" style="margin-top:6px;margin-bottom:0;">
-        <select id="chapter" onchange="onChapterChange()" disabled>
-          <option value="">— Select Chapter —</option>
-        </select>
-      </div>
+    <!-- Chapter (shown only if nation has chapters) -->
+    <div class="field hidden" id="chapterField">
+      <span class="field-label">Chapter <span class="req">*</span></span>
+      <select id="chapter"><option value="">— Select Chapter —</option></select>
+      <div class="field-error" id="chapterErr">Please select your chapter.</div>
     </div>
 
-    <!-- Region — all nations -->
-    <div class="dyn-field hide" id="wrapRegion">
-      <div class="field" style="margin-bottom:0;">
-        <label>Region <span class="req">*</span></label>
-        <select id="region" onchange="onRegionChange()" disabled>
-          <option value="">— Select Region —</option>
-        </select>
-      </div>
+    <!-- Region -->
+    <div class="field hidden" id="regionField">
+      <span class="field-label">Region <span class="req">*</span></span>
+      <select id="region"><option value="">— Select Region —</option></select>
+      <div class="field-error" id="regionErr">Please select your region.</div>
     </div>
 
-    <!-- Division — nations that have it -->
-    <div class="dyn-field hide" id="wrapDivision">
-      <div class="field" style="margin-bottom:0;">
-        <label>Division <span class="req">*</span></label>
-        <select id="division" onchange="onDivisionChange()" disabled>
-          <option value="">— Select Region first —</option>
-        </select>
-      </div>
+    <!-- Division -->
+    <div class="field hidden" id="divisionField">
+      <span class="field-label">Division <span class="req">*</span></span>
+      <select id="division"><option value="">— Select Division —</option></select>
+      <div class="field-error" id="divisionErr">Please select your division.</div>
     </div>
 
-    <!-- Unit — always shown after region/division -->
-    <div class="dyn-field hide" id="wrapUnit">
-      <div class="field" style="margin-bottom:0;">
-        <label>Unit <span class="req">*</span></label>
-        <select id="unit" disabled>
-          <option value="">— Select above first —</option>
-        </select>
-      </div>
+    <!-- Unit -->
+    <div class="field hidden" id="unitField">
+      <span class="field-label">Unit <span class="req">*</span></span>
+      <select id="unit"><option value="">— Select Unit —</option></select>
+      <div class="field-error" id="unitErr">Please select your unit.</div>
     </div>
 
-  </div>
+    <!-- Error alert -->
+    <div class="alert alert-error" id="alertError">
+      <span class="alert-icon">⚠️</span>
+      <span id="alertErrorMsg">Something went wrong. Please try again.</span>
+    </div>
 
-  <button class="btn-submit" id="submitBtn" onclick="handleSubmit()">
-    ✅ Complete Registration
-  </button>
+    <!-- Submit -->
+    <button class="btn-submit" id="btnSubmit" onclick="handleSubmit()">
+      <span id="btnText">Submit Registration</span>
+    </button>
+  </div><!-- /formWrap -->
 
-  <div class="msg success"   id="msgSuccess">
-    <div class="msg-title">🎉 Registration Successful!</div>
-    You are registered for <strong>നാട്ടു ദർസ്</strong>. Welcome aboard!
-  </div>
-  <div class="msg duplicate" id="msgDuplicate">
-    <div class="msg-title">⚠️ Already Registered</div>
-    <span id="duplicateText"></span>
-  </div>
-  <div class="msg error"     id="msgError">
-    <div class="msg-title">❌ Submission Failed</div>
-    <span id="errorText">Please try again.</span>
-  </div>
-
-</div>
-
-<div class="footer">
-  നാട്ടു ദർസ് &nbsp;·&nbsp; Nattu Dars &nbsp;·&nbsp; ICF International
-</div>
+</div><!-- /card -->
 
 <script>
-// ── Hierarchy data from Apps Script ──
-// Structure returned by getHierarchy():
-//   H.nations  = ["Bahrain","Malaysia","Oman",...]
-//   H.config   = { "Oman":{ hasChapter:false, hasDivision:true }, ... }
-//   H.tree     = { nation: { chapter: { region: { division: [units] } } } }
-//
-// For nations WITHOUT chapter: chapter key = ""
-// For nations WITHOUT division: division key = ""
+// ════════════════════════════════════════════════════════════════
+//  YOUR APPS SCRIPT WEB APP URL  ← already set for you
+// ════════════════════════════════════════════════════════════════
+const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby0kh2QjHYKCrW-5-CHD8EtUnQU3A-vwZJZaa_FdPkYLmFl3XNXUgKxtbS49g-pBLDR/exec";
+// ════════════════════════════════════════════════════════════════
 
-var H = null;
+const $ = id => document.getElementById(id);
+let HIERARCHY = null;
 
-// ====== THE FIXED GITHUB PAGES CODE ======
-const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby0kh2QjHYKCrW-5-CHD8EtUnQU3A-vwZJZaa_FdPkYLmFl3XNXUgKxtbS49g-pBLDR/exec"; 
+// ── TOGGLE GROUP ─────────────────────────────────────────────
+// We use JS .active class instead of CSS :checked+label because
+// the general `label` style rule causes specificity conflicts.
+function initToggle(groupId) {
+  const group   = $(groupId);
+  const options = group.querySelectorAll('.toggle-option');
+  options.forEach(opt => {
+    opt.addEventListener('click', () => {
+      options.forEach(o => o.classList.remove('active'));
+      opt.classList.add('active');
+      opt.querySelector('input[type="radio"]').checked = true;
+      opt.querySelector('input[type="radio"]').dispatchEvent(new Event('change', { bubbles: true }));
+    });
+  });
+}
+initToggle('qualGroup');
+initToggle('attendGroup');
 
+// Show/hide degree sub-field
+document.querySelectorAll('input[name="qualType"]').forEach(r => {
+  r.addEventListener('change', () => {
+    const isDeg = r.value === 'Degree' && r.checked;
+    $('degreeSubField').classList.toggle('hidden', !isDeg);
+    if (!isDeg) $('degree').value = '';
+  });
+});
+
+// ── LOAD HIERARCHY VIA JSONP ──────────────────────────────────
+// JSONP bypasses CORS completely — works from any domain.
+// Apps Script returns:  onHierarchyLoaded({ nations:{...}, headerImage:"..." });
 function loadHierarchy() {
-  // Show the loading text status overlay instantly
-  document.getElementById('loadingMsg').classList.add('show');
-  
-  // Routes to your external Web App API endpoints via JSONP callback routing
-  const fetchUrl = `${WEB_APP_URL}?action=getHierarchy&callback=handleHierarchySuccess`;
-  
-  const script = document.createElement('script');
-  script.src = fetchUrl;
-  script.id = 'jsonpHierarchy';
-  
-  // Gracefully catch system network drops or timeouts
-  script.onerror = function() {
-    document.getElementById('loadingMsg').textContent = '❌ Network connection timed out or script blocked.';
-  };
-  
+  const script  = document.createElement('script');
+  script.src    = WEB_APP_URL + '?action=getHierarchy&callback=onHierarchyLoaded&t=' + Date.now();
+  script.onerror = () => showLoadError('Network error. Check WEB_APP_URL and re-deploy as "Anyone".');
+  document.body.appendChild(script);
+
+  // Safety timeout — if nothing happens in 12 seconds, show error
+  setTimeout(() => {
+    if (!HIERARCHY) showLoadError('Timed out loading hierarchy. Check your Apps Script deployment.');
+  }, 12000);
+}
+
+function showLoadError(msg) {
+  const ov = $('loadingOverlay');
+  ov.classList.add('error-state');
+  ov.querySelector('.spin-big').style.display = 'none';
+  ov.querySelector('p').textContent = '⚠️ ' + msg;
+}
+
+// Called automatically by the JSONP response from Apps Script
+function onHierarchyLoaded(data) {
+  // Guard: if data is the old error format, show it
+  if (!data || data.result === 'error') {
+    showLoadError(data ? data.error : 'Empty response from Apps Script.');
+    return;
+  }
+  if (!data.nations || Object.keys(data.nations).length === 0) {
+    showLoadError('Hierarchy sheet is empty. Add data to the Hierarchy sheet in your Google Sheet.');
+    return;
+  }
+
+  HIERARCHY = data.nations;
+
+  // Header image (optional — if Apps Script returns one)
+  if (data.headerImage) {
+    const wrap = $('headerWrap');
+    wrap.innerHTML = '<img class="header-img" src="' + data.headerImage + '" alt="നാട്ടു ദർസ്"><div class="header-sub" style="margin-top:8px">Teacher Registration</div>';
+  }
+
+  // Populate Nation dropdown
+  const sel = $('nation');
+  Object.keys(HIERARCHY).sort().forEach(n => {
+    const o = document.createElement('option');
+    o.value = o.textContent = n;
+    sel.appendChild(o);
+  });
+
+  // Hide overlay — form is ready
+  $('loadingOverlay').style.opacity = '0';
+  setTimeout(() => $('loadingOverlay').style.display = 'none', 300);
+}
+
+// ── CASCADING DROPDOWNS ───────────────────────────────────────
+$('nation').addEventListener('change', function () {
+  const nation = this.value;
+  ['chapter','region','division','unit'].forEach(clear);
+  if (!nation || !HIERARCHY[nation]) return;
+  const { levels, data } = HIERARCHY[nation];
+  if (levels.includes('Chapter'))     populate('chapter', Object.keys(data).sort());
+  else if (levels.includes('Region')) populate('region',  Object.keys(data).sort());
+});
+
+$('chapter').addEventListener('change', function () {
+  const nation = $('nation').value, chapter = this.value;
+  ['region','division','unit'].forEach(clear);
+  if (!chapter) return;
+  const regions = Object.keys(HIERARCHY[nation].data[chapter] || {}).sort();
+  if (regions.length) populate('region', regions);
+});
+
+$('region').addEventListener('change', function () {
+  const nation = $('nation').value, chapter = $('chapter').value, region = this.value;
+  ['division','unit'].forEach(clear);
+  if (!region) return;
+  const { levels, data } = HIERARCHY[nation];
+  const sub = levels.includes('Chapter') && chapter
+    ? (data[chapter] || {})[region]
+    : data[region];
+  if (!sub) return;
+  if (Array.isArray(sub))            populate('unit',     sub.sort());
+  else if (typeof sub === 'object')  populate('division', Object.keys(sub).sort());
+});
+
+$('division').addEventListener('change', function () {
+  const nation = $('nation').value, chapter = $('chapter').value,
+        region = $('region').value,  division = this.value;
+  clear('unit');
+  if (!division) return;
+  const { levels, data } = HIERARCHY[nation];
+  const units = levels.includes('Chapter') && chapter
+    ? ((data[chapter] || {})[region] || {})[division]
+    : (data[region] || {})[division];
+  if (units && units.length) populate('unit', units.sort());
+});
+
+function populate(id, options) {
+  const sel = $(id);
+  reset(sel);
+  options.forEach(v => {
+    const o = document.createElement('option');
+    o.value = o.textContent = v;
+    sel.appendChild(o);
+  });
+  $(id + 'Field').classList.remove('hidden');
+}
+function clear(id) {
+  $(id + 'Field').classList.add('hidden');
+  reset($(id));
+}
+function reset(sel) {
+  while (sel.options.length > 1) sel.remove(1);
+  sel.value = '';
+}
+
+// ── VALIDATION ────────────────────────────────────────────────
+function getRadio(name) {
+  const el = document.querySelector('input[name="' + name + '"]:checked');
+  return el ? el.value : '';
+}
+function clearErrors() {
+  ['nameErr','degreeErr','attendErr','mobileErr','whatsappErr',
+   'nationErr','chapterErr','regionErr','divisionErr','unitErr']
+    .forEach(id => { const e=$(id); if(e) e.classList.remove('show'); });
+  ['name','degree','mobile','whatsapp','nation','chapter','region','division','unit']
+    .forEach(id => { const e=$(id); if(e) e.classList.remove('err'); });
+}
+function markErr(fieldId, errId, msg) {
+  const e = $(errId); if (e) { e.textContent = msg; e.classList.add('show'); }
+  const f = $(fieldId); if (f) f.classList.add('err');
+}
+
+function validate() {
+  let ok = true;
+  const nation = $('nation').value;
+  const levels = (HIERARCHY && HIERARCHY[nation]) ? HIERARCHY[nation].levels : [];
+
+  if (!$('name').value.trim())
+    { markErr('name','nameErr','Please enter your full name.'); ok=false; }
+
+  if (getRadio('qualType') === 'Degree' && !$('degree').value.trim())
+    { markErr('degree','degreeErr','Please enter the degree you hold.'); ok=false; }
+
+  if (!getRadio('attendance'))
+    { $('attendErr').classList.add('show'); ok=false; }
+
+  if ($('mobile').value.trim().length < 5)
+    { markErr('mobile','mobileErr','Please enter a valid mobile number.'); ok=false; }
+  if ($('whatsapp').value.trim().length < 5)
+    { markErr('whatsapp','whatsappErr','Please enter a valid WhatsApp number.'); ok=false; }
+  if (!nation)
+    { markErr('nation','nationErr','Please select your nation.'); ok=false; }
+
+  if (nation) {
+    if (levels.includes('Chapter')  && !$('chapterField').classList.contains('hidden')  && !$('chapter').value)
+      { markErr('chapter','chapterErr','Please select your chapter.'); ok=false; }
+    if (levels.includes('Region')   && !$('regionField').classList.contains('hidden')   && !$('region').value)
+      { markErr('region','regionErr','Please select your region.'); ok=false; }
+    if (levels.includes('Division') && !$('divisionField').classList.contains('hidden') && !$('division').value)
+      { markErr('division','divisionErr','Please select your division.'); ok=false; }
+    if (levels.includes('Unit')     && !$('unitField').classList.contains('hidden')     && !$('unit').value)
+      { markErr('unit','unitErr','Please select your unit.'); ok=false; }
+  }
+  return ok;
+}
+
+// ── SUBMIT VIA JSONP ──────────────────────────────────────────
+function handleSubmit() {
+  clearErrors();
+  $('alertError').classList.remove('show');
+
+  if (!HIERARCHY) {
+    $('alertErrorMsg').textContent = 'Form is still loading. Please wait.';
+    $('alertError').classList.add('show');
+    return;
+  }
+  if (!validate()) {
+    const firstErr = document.querySelector('.field-error.show');
+    if (firstErr) firstErr.scrollIntoView({ behavior:'smooth', block:'center' });
+    return;
+  }
+
+  const btn = $('btnSubmit'), txt = $('btnText');
+  btn.disabled = true;
+  txt.innerHTML = '<div class="spinner"></div>&nbsp;Submitting…';
+
+  const qual = getRadio('qualType');
+  const params = new URLSearchParams({
+    callback:    'onSubmitResponse',
+    action:      'submit',
+    name:        $('name').value.trim(),
+    darsiDegree: qual,
+    degree:      qual === 'Degree' ? $('degree').value.trim() : '',
+    attendance:  getRadio('attendance'),
+    mobile:      $('mobile').value.trim(),
+    whatsapp:    $('whatsapp').value.trim(),
+    nation:      $('nation').value,
+    chapter:     $('chapter').value,
+    region:      $('region').value,
+    division:    $('division').value,
+    unit:        $('unit').value,
+    t:           Date.now()   // prevent caching
+  });
+
+  const script   = document.createElement('script');
+  script.id      = 'jsonpSubmit';
+  script.src     = WEB_APP_URL + '?' + params.toString();
+  script.onerror = () => onSubmitResponse({ result:'error', error:'Network error. Please try again.' });
   document.body.appendChild(script);
 }
 
-// Global handle wrapper that handles the backend data packet delivery
-function handleHierarchySuccess(data) {
-  // Save data packet layout properties back to your original global 'H' variable matrix
-  H = data;
-  
-  // Hide loading notification text
-  document.getElementById('loadingMsg').classList.remove('show');
-  
-  // Fire off your original secondary functions to parse dropdown list boxes
-  populateNations();
-  document.getElementById('nation').disabled = false;
-  
-  // Housekeep and delete the temporary routing tag safely
-  const oldScript = document.getElementById('jsonpHierarchy');
-  if(oldScript) oldScript.remove();
-}
+// Called by the JSONP response
+function onSubmitResponse(res) {
+  const old = $('jsonpSubmit'); if (old) old.remove();
+  const btn = $('btnSubmit'), txt = $('btnText');
+  btn.disabled = false;
+  txt.textContent = 'Submit Registration';
 
-
-// ── Populate Nations ──
-function populateNations() {
-  var sel = document.getElementById('nation');
-  sel.innerHTML = '<option value="">— Select Nation —</option>';
-  H.nations.forEach(function(n) {
-    sel.innerHTML += '<option value="'+esc(n)+'">'+esc(n)+'</option>';
-  });
-}
-
-// ── Nation changed ──
-function onNationChange() {
-  var nation = document.getElementById('nation').value;
-  if (!nation || !H) return resetFrom('chapter');
-
-  var cfg = H.config[nation] || { hasChapter:false, hasDivision:false };
-
-  // Hide everything first, then show what's needed
-  resetFrom('chapter');
-
-  if (cfg.hasChapter) {
-    // Saudi Arabia pattern: Chapter → Region → Division → Unit
-    showField('wrapChapter');
-    fillSelect('chapter', getKeys(H.tree[nation]), '— Select Chapter —');
-    enableSelect('chapter', true);
+  if (res.result === 'success') {
+    $('formWrap').classList.add('hidden');
+    $('successScreen').classList.remove('hidden');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  } else if (res.result === 'duplicate') {
+    $('alertErrorMsg').textContent = res.error || 'This number is already registered.';
+    $('alertError').classList.add('show');
+    $('alertError').scrollIntoView({ behavior:'smooth', block:'center' });
   } else {
-    // No chapter — go straight to Region
-    showField('wrapRegion');
-    fillSelect('region', getKeys(H.tree[nation]['']), '— Select Region —');
-    enableSelect('region', true);
+    $('alertErrorMsg').textContent = res.error || 'Server error. Please try again.';
+    $('alertError').classList.add('show');
   }
 }
 
-// ── Chapter changed (Saudi Arabia) ──
-function onChapterChange() {
-  var nation  = document.getElementById('nation').value;
-  var chapter = document.getElementById('chapter').value;
-  resetFrom('region');
-  if (!chapter) return;
-
-  showField('wrapRegion');
-  var regions = getKeys(H.tree[nation][chapter]);
-  fillSelect('region', regions, '— Select Region —');
-  enableSelect('region', true);
-}
-
-// ── Region changed ──
-function onRegionChange() {
-  var nation  = document.getElementById('nation').value;
-  var cfg     = H.config[nation] || {};
-  var chapter = cfg.hasChapter ? document.getElementById('chapter').value : '';
-  var region  = document.getElementById('region').value;
-  resetFrom('division');
-  if (!region) return;
-
-  var regionData = H.tree[nation][chapter][region] || {};
-
-  if (cfg.hasDivision) {
-    // Has Division level
-    showField('wrapDivision');
-    fillSelect('division', getKeys(regionData), '— Select Division —');
-    enableSelect('division', true);
-  } else {
-    // No Division — go straight to Unit (division key = "")
-    var units = regionData[''] || [];
-    showField('wrapUnit');
-    fillSelect('unit', units, '— Select Unit —');
-    enableSelect('unit', true);
-  }
-}
-
-// ── Division changed ──
-function onDivisionChange() {
-  var nation   = document.getElementById('nation').value;
-  var cfg      = H.config[nation] || {};
-  var chapter  = cfg.hasChapter ? document.getElementById('chapter').value : '';
-  var region   = document.getElementById('region').value;
-  var division = document.getElementById('division').value;
-  resetFrom('unit');
-  if (!division) return;
-
-  var units = (H.tree[nation][chapter][region][division]) || [];
-  showField('wrapUnit');
-  fillSelect('unit', units, '— Select Unit —');
-  enableSelect('unit', true);
-}
-
-// ── Helpers ──
-function getKeys(obj) {
-  if (!obj) return [];
-  return Object.keys(obj).filter(function(k){ return k !== ''; }).sort();
-}
-
-function fillSelect(id, options, placeholder) {
-  var sel = document.getElementById(id);
-  sel.innerHTML = '<option value="">'+placeholder+'</option>';
-  options.forEach(function(o) {
-    sel.innerHTML += '<option value="'+esc(o)+'">'+esc(o)+'</option>';
-  });
-}
-
-function enableSelect(id, enabled) {
-  document.getElementById(id).disabled = !enabled;
-}
-
-function showField(wrapId) {
-  var el = document.getElementById(wrapId);
-  el.classList.remove('hide');
-  el.classList.add('show');
-}
-
-function hideField(wrapId) {
-  var el = document.getElementById(wrapId);
-  el.classList.remove('show');
-  el.classList.add('hide');
-}
-
-// Reset all dropdowns from a given level downward
-function resetFrom(from) {
-  var order = ['chapter','region','division','unit'];
-  var idx   = order.indexOf(from);
-  for (var i = idx; i < order.length; i++) {
-    hideField('wrap'+cap(order[i]));
-    enableSelect(order[i], false);
-    document.getElementById(order[i]).innerHTML =
-      '<option value="">— Select above first —</option>';
-  }
-}
-
-function cap(s) { return s.charAt(0).toUpperCase()+s.slice(1); }
-
-function esc(s) {
-  return String(s||'')
-    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
-    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-}
-
-// ── Show Message ──
-function showMsg(type, text) {
-  ['msgSuccess','msgDuplicate','msgError'].forEach(function(id){
-    document.getElementById(id).style.display='none';
-  });
-  if (type==='success') {
-    document.getElementById('msgSuccess').style.display='block';
-  } else if (type==='duplicate') {
-    document.getElementById('duplicateText').textContent = text||'';
-    document.getElementById('msgDuplicate').style.display='block';
-  } else {
-    document.getElementById('errorText').textContent = text||'Please try again.';
-    document.getElementById('msgError').style.display='block';
-  }
-}
-
-// ── Submit ──
-function handleSubmit() {
-  var name       = document.getElementById('name').value.trim();
-  var darsiType  = document.getElementById('darsiType').value.trim();
-  var degree     = document.getElementById('degree').value.trim();
-  var attend     = document.getElementById('attend').value.trim();
-  var whatsapp   = document.getElementById('whatsapp').value.replace(/\s/g,'').trim();
-  var mobile     = document.getElementById('mobile').value.replace(/\s/g,'').trim();
-  var nation     = document.getElementById('nation').value;
-  var cfg        = H && H.config[nation] ? H.config[nation] : {};
-  var chapter    = cfg.hasChapter ? document.getElementById('chapter').value : '';
-  var region     = document.getElementById('region').value;
-  var division   = cfg.hasDivision ? document.getElementById('division').value : '';
-  var unit       = document.getElementById('unit').value;
-
-  // Validate
-  if (!name)     { alert('Please enter your full name.'); return; }
-  if (!whatsapp) { alert('Please enter your WhatsApp number.'); return; }
-  if (!mobile)   { alert('Please enter your Mobile number.'); return; }
-  if (!nation)   { alert('Please select your Nation.'); return; }
-  if (cfg.hasChapter && !chapter)  { alert('Please select your Chapter.'); return; }
-  if (!region)   { alert('Please select your Region.'); return; }
-  if (cfg.hasDivision && !division){ alert('Please select your Division.'); return; }
-  if (!unit)     { alert('Please select your Unit.'); return; }
-
-  var btn = document.getElementById('submitBtn');
-  btn.disabled = true;
-  btn.textContent = '⏳ Submitting…';
-  ['msgSuccess','msgDuplicate','msgError'].forEach(function(id){
-    document.getElementById(id).style.display='none';
-  });
-
-  google.script.run
-    .withSuccessHandler(function(result) {
-      btn.disabled = false;
-      btn.textContent = '✅ Complete Registration';
-      if (result.status==='ok') {
-        showMsg('success');
-        // Clear form
-        ['name','darsType','degree','attend','whatsapp','mobile'].forEach(function(id){
-          document.getElementById(id).value='';
-        });
-        resetFrom('chapter');
-        document.getElementById('nation').value='';
-      } else if (result.status==='duplicate') {
-        showMsg('duplicate', result.message);
-      } else {
-        showMsg('error', result.message||'Unexpected error.');
-      }
-    })
-    .withFailureHandler(function(err) {
-      btn.disabled = false;
-      btn.textContent = '✅ Complete Registration';
-      showMsg('error', err.message||'Server error. Please try again.');
-    })
-    .submitRegistration({
-      name:       name,
-      darsiType:  darsiType,
-      degree:     degree,
-      attend:     attend,
-      whatsapp:   whatsapp,
-      mobile:     mobile,
-      nation:     nation,
-      chapter:    chapter,
-      region:     region,
-      division:   division,
-      unit:       unit
-    });
-}
-
-// Load on page ready
+// ── START ─────────────────────────────────────────────────────
 loadHierarchy();
-
-// This is the code added for GitHub
-  // Global configuration values
-  const WEB_APP_URL = "https://script.google.com/macros/s/AKfycby0kh2QjHYKCrW-5-CHD8EtUnQU3A-vwZJZaa_FdPkYLmFl3XNXUgKxtbS49g-pBLDR/exec";
-
-  // ==========================================
-  // STEP 1: LOAD HIERARCHY DATA ON STARTUP
-  // ==========================================
-  window.addEventListener('DOMContentLoaded', () => {
-    // Generate a secure connection hook to fetch table metadata records
-    const fetchUrl = `${WEB_APP_URL}?action=getHierarchy&callback=loadDropdowns`;
-    
-    const script = document.createElement('script');
-    script.src = fetchUrl;
-    script.id = 'jsonpHierarchy';
-    document.body.appendChild(script);
-  });
-
-  // Callback handler that parses the tree matrix once received from Google
-  function loadDropdowns(data) {
-    console.log("Hierarchy structure successfully loaded:", data);
-    
-    // Clean up the temporary injection tag
-    const oldScript = document.getElementById('jsonpHierarchy');
-    if(oldScript) oldScript.remove();
-
-    // 💡 YOUR DROPDOWN GENERATION CODE GOES HERE:
-    // You can now access: data.nations, data.config, and data.tree
-    // Example: Populate a nation selection dropdown menu element
-  }
-
-  // ==========================================
-  // STEP 2: HANDLE REGISTRATION FORM SUBMISSION
-  // ==========================================
-  // Create and inject the form submit button dynamically
-  document.querySelector('.card').insertAdjacentHTML('beforeend', '<button class="btn-submit" id="btnSubmit">Submit Registration</button>');
-
-  document.getElementById('btnSubmit').addEventListener('click', function(e) {
-    e.preventDefault();
-    
-    const nameInput = document.getElementById('name').value.trim();
-    if (!nameInput) {
-      alert("Please enter your full name.");
-      return;
-    }
-
-    this.disabled = true;
-    this.innerText = "Submitting...";
-
-    const name = encodeURIComponent(nameInput);
-    const darsiType = encodeURIComponent(document.querySelector('input[name="darsiType"]:checked').value);
-    const degree = encodeURIComponent(document.getElementById('degree').value.trim());
-    const attend = encodeURIComponent(document.querySelector('input[name="attend"]:checked').value);
-
-    // Create standard secure URL route parameters
-    const submissionUrl = `${WEB_APP_URL}?callback=handleResponse&name=${name}&darsiType=${darsiType}&degree=${degree}&attend=${attend}`;
-
-    const script = document.createElement('script');
-    script.src = submissionUrl;
-    script.id = 'jsonpSubmit';
-    document.body.appendChild(script);
-  });
-
-  // Handle data storage response results sent back from your Sheet
-  function handleResponse(response) {
-    const btn = document.getElementById('btnSubmit');
-    if (response.result === 'success') {
-      alert('Registration Successful!');
-      location.reload();
-    } else {
-      alert('Submission failed: ' + response.error);
-      btn.disabled = false;
-      btn.innerText = "Submit Registration";
-    }
-    
-    const oldScript = document.getElementById('jsonpSubmit');
-    if(oldScript) oldScript.remove();
-  }
 </script>
-
 </body>
 </html>
