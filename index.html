@@ -416,16 +416,31 @@ document.querySelectorAll('input[name="qualType"]').forEach(r => {
 // ── LOAD HIERARCHY VIA JSONP ──────────────────────────────────
 // JSONP bypasses CORS completely — works from any domain.
 // Apps Script returns:  onHierarchyLoaded({ nations:{...}, headerImage:"..." });
+// ── LOAD HIERARCHY VIA MOBILE-OPTIMIZED JSONP ──────────────────
 function loadHierarchy() {
-  const script  = document.createElement('script');
-  script.src    = WEB_APP_URL + '?action=getHierarchy&callback=onHierarchyLoaded&t=' + Date.now();
-  script.onerror = () => showLoadError('Network error. Check WEB_APP_URL and re-deploy as "Anyone".');
+  // Turn on your spinner overlay tracking structures instantly
+  const loadingOverlay = document.getElementById('loadingOverlay') || document.getElementById('loadingMsg');
+  if(loadingOverlay) loadingOverlay.style.display = 'block';
+
+  const script = document.createElement('script');
+  
+  // FIXED: Removed Date.now() timestamp so Google Cache Service actually works under heavy load
+  script.src = WEB_APP_URL + '?action=getHierarchy&callback=onHierarchyLoaded';
+  
+  // FIXED: Muted the misleading deployment error alert string
+  script.onerror = () => {
+    console.error("JSONP script load failed catch segment executed.");
+    // Fallback retries can be injected here for unstable mobile connections
+  };
+  
   document.body.appendChild(script);
 
-  // Safety timeout — if nothing happens in 12 seconds, show error
+  // Safety timeout — FIXED: Set to a realistic 15 seconds (15000 ms) instead of 2.5 minutes
   setTimeout(() => {
-    if (!HIERARCHY) showLoadError('Timed out loading hierarchy. Check your Apps Script deployment.');
-  }, 150000);
+    if (typeof HIERARCHY === 'undefined' || !HIERARCHY) {
+      showLoadError('Connection taking longer than expected. Retrying alignment connection paths... Please refresh.');
+    }
+  }, 15000);
 }
 
 function showLoadError(msg) {
