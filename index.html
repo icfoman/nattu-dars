@@ -215,6 +215,17 @@
 
   .hidden { display: none !important; }
 
+  /* ── HEADER IMAGE ── */
+  .nattudars-header {
+    width: 100%; background: #3d3300;
+    display: flex; justify-content: center;
+    box-shadow: 0 3px 16px rgba(0,0,0,0.35);
+    max-width: 640px;
+  }
+  .nattudars-header img {
+    width: 100%; max-width: 680px; height: auto; display: block;
+  }
+
   @media (max-width: 480px) {
     .card { padding: 20px 16px 28px; }
     .toggle-option { font-size: 13px; padding: 10px 4px; }
@@ -230,11 +241,12 @@
 </div>
 
 <!-- ── HEADER ── -->
-<div class="header-wrap" id="headerWrap">
-  <!-- If Apps Script returns a base64 image it will be injected here,
-       otherwise the text title below is shown -->
-  <div class="header-title">നാട്ടു ദർസ്</div>
-  <div class="header-sub">Teacher Registration</div>
+<div class="nattudars-header" id="headerWrap">
+  <img
+    id="headerImg"
+    src="PASTE_YOUR_BASE64_HERE"
+    alt="നാട്ടു ദർസ്"
+  >
 </div>
 <div class="gold-bar"></div>
 
