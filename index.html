@@ -425,7 +425,7 @@ function loadHierarchy() {
   // Safety timeout — if nothing happens in 12 seconds, show error
   setTimeout(() => {
     if (!HIERARCHY) showLoadError('Timed out loading hierarchy. Check your Apps Script deployment.');
-  }, 12000);
+  }, 90000);
 }
 
 function showLoadError(msg) {
